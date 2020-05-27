@@ -10,8 +10,8 @@ v1.1
 '
 
 # Sets up the hipposcraper
-mv . ../
-mv read_scraper.py scrapers/
+mv * ../
+mv read_scraper.py ../scrapers/
 
 
 # Sets up the pusher
@@ -28,7 +28,7 @@ fi
 
 if ! grep -q tasker.py ~/.bashrc
 then
-    tasker_alias="alias tasker='python2 $(pwd)/tasker.py'"
+    tasker_alias="alias tasker='python2 $(pwd)/../tasker.py'"
     echo "$tasker_alias" >> ~/.bashrc
     echo "  -> $tasker_alias"
 else
@@ -38,7 +38,7 @@ fi
 
 if ! grep -q tasker.py ~/.bashrc
 then
-    pusher_alias="alias pusher='python3 $(pwd)/pusher.py'"
+    pusher_alias="alias pusher='python3 $(pwd)/../pusher.py'"
     echo "$pusher_alias" >> ~/.bashrc
     echo "  -> $pusher_alias"
 else
