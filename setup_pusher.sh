@@ -11,7 +11,6 @@ v1.1
 
 # Sets up the hipposcraper
 sudo mv * ../
-sudo mv read_scraper.py
 sudo mv ../read_scraper.py ../scrapers/
 
 
