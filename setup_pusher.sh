@@ -10,8 +10,8 @@ v1.1
 '
 
 # Sets up the hipposcraper
-mv * ../
-mv read_scraper.py ../scrapers/
+sudo mv * ../
+sudo mv read_scraper.py ../scrapers/
 
 
 # Sets up the pusher
@@ -46,11 +46,11 @@ else
 
 fi
 
-rm -r ../pusher/
+sudo rm -r ../pusher/
 
 echo "Reloading .bashrc:"
 source ~/.bashrc
-rm ../setup_pusher.sh
+sudo rm -r ../setup_pusher.sh
 
 
 echo "All set!"
