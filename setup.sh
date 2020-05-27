@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
-# Sets up the hipposcraper:
+#!/bin/bash
+# Sets up the pusher and hipposcraper:
 #+  Configures aliases in .bashrc
 #+  Sets inputted user information in auth.json
 
-echo "Thanks for downloading the Hipposcraper! Let's get you set up."
+echo -e "Thanks for downloading Pusher!\nTo get started, let's set up some hipposcraper stuff on your computer\n"
 echo "  -> Checking if auth_data.json exists..."
 if [ ! -f auth_data.json ]
 then
@@ -57,38 +57,31 @@ then
 fi
 
 echo "Setting aliases:"
-if ! grep -q hippoproject ~/.bashrc || \
-   ! grep -q hipporead  ~/.bashrc || \
-   ! grep -q hipposcrape ~/.bashrc
+
+if ! grep -q tasker ~/.bashrc || \
+   ! grep -q pusher ~/.bashrc
 then
-    echo -e "\n# Hipposcraper aliases" >> ~/.bashrc
+    echo -e "\n# Pusher aliases" >> ~/.bashrc
 fi
 
-if ! grep -q hippoproject.py ~/.bashrc
+if ! grep -q tasker.py ~/.bashrc
 then
-    project_alias="alias hippoproject='python2 $(pwd)/hippoproject.py'"
-    echo "$project_alias" >> ~/.bashrc
-    echo "  -> $project_alias"
+    tasker_alias="alias tasker='python2 $(pwd)/tasker.py'"
+    echo "$tasker_alias" >> ~/.bashrc
+    echo "  -> $tasker_alias"
 else
-    echo "  -> hippoproject already defined"
+    echo "  -> tasker already defined"
+
 fi
 
-if ! grep -q hipporead.py ~/.bashrc
+if ! grep -q tasker.py ~/.bashrc
 then
-  read_alias="alias hipporead='python2 $(pwd)/hipporead.py'"
-    echo "$read_alias" >> ~/.bashrc
-    echo "  -> $read_alias"
+    pusher_alias="alias pusher='python3 $(pwd)/pusher.py'"
+    echo "$pusher_alias" >> ~/.bashrc
+    echo "  -> $pusher_alias"
 else
-    echo "  -> hipporead already defined"
-fi
+    echo "  -> pusher already defined"
 
-if ! grep -q hipposcrape.sh ~/.bashrc
-then
-    scrape_alias="alias hipposcrape='python2 $(pwd)/hipposcrape.sh'"
-    echo "$scrape_alias" >> ~/.bashrc
-    echo "  -> $scrape_alias"
-else
-    echo "  -> hipposcrape already defined"
 fi
 
 echo "Reloading .bashrc:"
