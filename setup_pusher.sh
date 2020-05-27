@@ -13,6 +13,8 @@ v1.1
 sudo mv * ../
 sudo mv ../read_scraper.py ../scrapers/
 
+cd ..
+
 
 # Sets up the pusher
 #+ configure alias
@@ -28,7 +30,7 @@ fi
 
 if ! grep -q tasker.py ~/.bashrc
 then
-    tasker_alias="alias tasker='python2 $(pwd)/../tasker.py'"
+    tasker_alias="alias tasker='python2 $(pwd)/tasker.py'"
     echo "$tasker_alias" >> ~/.bashrc
     echo "  -> $tasker_alias"
 else
@@ -38,7 +40,7 @@ fi
 
 if ! grep -q pusher.py ~/.bashrc
 then
-    pusher_alias="alias pusher='python3 $(pwd)/../pusher.py'"
+    pusher_alias="alias pusher='python3 $(pwd)/pusher.py'"
     echo "$pusher_alias" >> ~/.bashrc
     echo "  -> $pusher_alias"
 else
@@ -46,11 +48,11 @@ else
 
 fi
 
-sudo rm -r ../pusher/
+sudo rm -r pusher/
 
 echo "Reloading .bashrc:"
 source ~/.bashrc
-sudo rm -r ../setup_pusher.sh
+sudo rm -r setup_pusher.sh
 
 
 echo "All set!"
