@@ -8,10 +8,31 @@ import subprocess
 class Pusher:
     pass
 
+    def modified(self):
+
+        try:
+            files = str(subprocess.check_output(
+                "git status -s . | grep ' M '", shell=True))
+            files = files.replace("b", '').replace(
+                ' M ', '').replace("\\n", "\n").replace("'", '').strip().split()
+            print(files)
+        except Exception as ex:
+            print(ex)
+
     def force(self):
-        files = subprocess.check_output("git status -s . | grep ' M '")
+
+        try:
+            files = subprocess.check_output(
+                "git status -s . | grep ' M '", shell=True)
+        except expression as identifier:
+            pass
         print(files)
-        files += subprocess.check_output("git status -s . | grep '?? '")
+        try:
+            files += subprocess.check_output(
+                "git status -s . | grep '?? '", shell=True)
+        except Exception as ex:
+            print(ex)
+
         print(files)
 
 
@@ -29,7 +50,7 @@ def get_args():
 
 
 test = Pusher()
-test.force()
+test.modified()
 
 
 """ if __name__ == "__main__":
