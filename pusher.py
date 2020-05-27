@@ -44,7 +44,7 @@ class Pusher:
             """All files are captured"""
             return str(subprocess.check_output(
                 "git status -s .", shell=True)).replace("b", '').replace(
-                '?? ', '').replace(' M ', '').replace("\\n", "\n").replace("'", '').strip().split()
+                '?? ', '').replace(' M ', '').replace("\\n", "\n").replace("'", '').replace(' D ', '') .strip().split()
 
         except Exception:
             print('Pusher: There are no files that need to be uploaded')
@@ -71,27 +71,20 @@ def get_args():
 
     args = sys.argv[1:]
     count = len(args)
+    usage = 'Usage: pusher [OPTIONS]\n    -m (modified)\n    -n (new)\n    -a (all)'
 
-    if count > 1:
-        print('Usage: pusher [OPTIONS]')
+    if count is 0 or count > 1:
+        print(usage)
         exit(1)
-
-    if count is 0:
-        if input('Are you sure you want to upload all new and changed files? Yes/No\n') == 'Yes':
-            return pusher.list_all()
-        else:
-            exit(0)
-
-    if count is 1:
-        method = args[0]
-
-        if method == '-m':
-            return pusher.list_mod()
-        elif method == '-n':
-            return pusher.list_new()
-        else:
-            print('Invalid option', method)
-            exit(1)
+    if args[0] == '-m':
+        return pusher.list_mod()
+    elif args[0] == '-n':
+        return pusher.list_new()
+    elif args[0] == '-a':
+        return pusher.list_all()
+    else:
+        print(usage)
+        exit(1)
 
 
 if __name__ == "__main__":
@@ -111,18 +104,31 @@ if __name__ == "__main__":
         for itemname in files:
             commit = '{} added'.format(itemname)
             for task in tasks:
-                if task.find(itemname) >= 0:
+                if task.find('./' + itemname) >= 0:
                     commit = task
 
             os.system('git add {}'.format(itemname))
             os.system("git commit -m '{}'".format(commit))
 
-        os.system('git push -u origin master')
-        print('\n  -> Files uploaded with their respective commit or filename per commit')
+        push = True if input('You want to upload the files now? Y/N\n>> ') in [
+            'Y', 'y'] else False
+        if push:
+            os.system('git push -u origin master')
+            print(
+                '\n  -> Files uploaded with their respective commit or filename per commit')
+        else:
+            print('You will need to use "git push" to publish your local commits')
+
     else:
         for itemname in files:
-            commit = input('\n\n[{}]\nInsert commit: '.format(itemname))
+            commit = input('\n[{}]\nInsert commit: '.format(itemname))
             os.system('git add {}'.format(itemname))
             os.system("git commit -m '{}'".format(commit))
-        os.system('git push -u origin master')
-        print('\n  -> Files uploaded with custom commit')
+
+        push = True if input('You want to upload the files now? Y/N\n>> ') in [
+            'Y', 'y'] else False
+        if push:
+            os.system('git push -u origin master')
+            print('\n  -> Files uploaded with custom commit')
+        else:
+            print('You will need to use "git push" to publish your local commits')

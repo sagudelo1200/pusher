@@ -2,7 +2,7 @@
 """Main entry point for tasker
 
 Usage:
-    `./tasker.py https://intranet.hbtn.io/projects/232`
+    `./tasker.py https://intranet.hbtn.io/projects/231`
 """
 from scrapers import *
 
@@ -48,7 +48,7 @@ def tasker():
     # Writing to .tasks with scraped data
     r_scraper.open_tasks()
     r_scraper.write_symple_tasks()
-    os.system("echo -e '.tasks' >> .gitignore")
+    os.system("echo '.tasks' >> .gitignore")
 
     print(".tasks all set!")
 
