@@ -38,7 +38,7 @@ fi
 
 if ! grep -q tasker.py ~/.bashrc
 then
-    pusher_alias="alias pusher='python3 $(pwd)/../pusher.py'"
+    pusher_alias="alias _pusher='python3 $(pwd)/../pusher.py'"
     echo "$pusher_alias" >> ~/.bashrc
     echo "  -> $pusher_alias"
 else
