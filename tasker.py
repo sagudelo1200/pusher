@@ -48,6 +48,7 @@ def tasker():
     # Writing to .tasks with scraped data
     r_scraper.open_tasks()
     r_scraper.write_symple_tasks()
+    os.system("echo -e '.tasks' >> .gitignore")
 
     print(".tasks all set!")
 

@@ -12,7 +12,8 @@ class Pusher:
         if os.path.isfile('.tasks'):
             pass
         else:
-            print('Pusher: you must first run the command:\ntasker  <project_link>')
+            print('Pusher: you must first run the command:')
+            print('tasker <project_link>')
             exit(1)
 
     def list_mod(self):
@@ -76,7 +77,10 @@ def get_args():
         exit(1)
 
     if count is 0:
-        return pusher.list_all()
+        if input('Are you sure you want to upload all new and changed files? Yes/No\n') == 'Yes':
+            return pusher.list_all()
+        else:
+            exit(0)
 
     if count is 1:
         method = args[0]
@@ -105,14 +109,14 @@ if __name__ == "__main__":
         exit(1)
     if changecommit is '0':
         for itemname in files:
+            commit = '{} added'.format(itemname)
             for task in tasks:
                 if task.find(itemname) >= 0:
                     commit = task
-                else:
-                    commit = '{} added'.format(itemname)
 
             os.system('git add {}'.format(itemname))
             os.system("git commit -m '{}'".format(commit))
+
         os.system('git push -u origin master')
         print('\n  -> Files uploaded with their respective commit or filename per commit')
     else:
