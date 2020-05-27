@@ -117,7 +117,7 @@ if __name__ == "__main__":
         print('\n  -> Files uploaded with their respective commit or filename per commit')
     else:
         for itemname in files:
-            commit = input('Insert commit: ')
+            commit = input('\n\n[{}]\nInsert commit: '.format(itemname))
             os.system('git add {}'.format(itemname))
             os.system("git commit -m '{}'".format(commit))
         os.system('git push -u origin master')
