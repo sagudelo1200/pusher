@@ -20,6 +20,7 @@ class ReadScraper:
     big_project_type = 0
     task_info = []
     readme = None
+    pointtasks = None
 
     def __init__(self, soup):
         self.soup = soup
@@ -146,10 +147,20 @@ class ReadScraper:
         try:
             if self.big_project_type == 1:
                 raise IOError
-            filename = self.dir_name + "/README.md"
+            filename = self.dir_name + "README.md"
             self.readme = open(filename, "w+")
         except IOError:
             self.readme = open("README.md", "w")
+
+    def open_tasks(self):
+        """Method that opens the .tasks file"""
+        try:
+            if self.big_project_type == 1:
+                raise IOError
+            filename = ".tasks"
+            self.pointtasks = open(filename, "w+")
+        except IOError:
+            self.pointtasks = open(".tasks", "w")
 
     def write_title(self):
         """Method that writes the title to README.md"""
@@ -198,15 +209,15 @@ class ReadScraper:
             print("done")
 
     def write_symple_tasks(self):
-        """Method that writes the entire tasks to README.md"""
+        """Method that writes the entire tasks to .tasks"""
         if (self.task_names is not None and self.file_names is not None and
                 self.task_info is not None):
             sys.stdout.write("  -> Writing task information... ")
             count = 0
             while count < len(self.task_names):
                 try:
-                    self.readme.write("[{}](./{})\n".format(
-                                      self.task_names[count], self.file_names[count]))
+                    self.pointtasks.write("[{}](./{})\n".format(
+                        self.task_names[count], self.file_names[count]))
                     count += 1
                 except IndexError:
                     sys.stdout.write("\n     [ERROR] Could not write task {}... "
