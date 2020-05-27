@@ -21,7 +21,7 @@ mv read_scraper.py ../scrapers/
 echo "Setting up shortcuts:"
 
 if ! grep -q tasker ~/.bashrc || \
-   ! grep -q pusher ~/.bashrc
+   ! grep -q _pusher ~/.bashrc
 then
     echo -e "\n# Pusher aliases" >> ~/.bashrc
 fi
@@ -36,9 +36,9 @@ else
 
 fi
 
-if ! grep -q tasker.py ~/.bashrc
+if ! grep -q pusher.py ~/.bashrc
 then
-    pusher_alias="alias _pusher='python3 $(pwd)/../pusher.py'"
+    pusher_alias="alias pusher='python3 $(pwd)/../pusher.py'"
     echo "$pusher_alias" >> ~/.bashrc
     echo "  -> $pusher_alias"
 else
@@ -46,7 +46,11 @@ else
 
 fi
 
+rm -r ../pusher/
+
 echo "Reloading .bashrc:"
 source ~/.bashrc
+rm ../setup_pusher.sh
+
 
 echo "All set!"
