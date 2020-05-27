@@ -1,10 +1,11 @@
+
 import os
 import sys
 import re
-import string
-import json
 import urllib2
 import cookielib
+import string
+import json
 import mechanize
 from bs4 import BeautifulSoup
 from base_parse import BaseParse
