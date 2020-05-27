@@ -147,7 +147,7 @@ class ReadScraper:
         try:
             if self.big_project_type == 1:
                 raise IOError
-            filename = self.dir_name + "\\README.md"
+            filename = self.dir_name + "/README.md"
             self.readme = open(filename, "w+")
         except IOError:
             self.readme = open("README.md", "w")
