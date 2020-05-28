@@ -12,7 +12,7 @@ class Pusher:
         if os.path.isfile('.tasks'):
             pass
         else:
-            print('Pusher: you must first run the command:')
+            print(Msg.FAIL + 'You must first run the command:')
             print('tasker <project_link>')
             exit(1)
 
@@ -23,7 +23,7 @@ class Pusher:
                 "git status -s . | grep ' M '", shell=True)).replace("b'", '').replace(
                 ' M ', '').replace("\\n", "\n").replace("'", '').strip().split()
         except Exception:
-            print('Pusher: There are no modified files that need to be uploaded')
+            print(Msg.WARNING + 'There are no modified files that need to be uploaded')
             exit(1)
 
     def list_new(self):
@@ -33,7 +33,8 @@ class Pusher:
                 "git status -s . | grep '?? '", shell=True)).replace("b'", '').replace(
                 '?? ', '').replace("\\n", "\n").replace("'", '').strip().split()
         except Exception:
-            print('Pusher: There are no new files that need to be uploaded')
+            print(Msg.WARNING +
+                  'There are no new files that need to be uploaded')
             exit(1)
 
     def list_all(self):
@@ -45,18 +46,20 @@ class Pusher:
                 '?? ', '').replace(' M ', '').replace("\\n", "\n").replace("'", '').replace(' D ', '') .strip().split()
 
         except Exception:
-            print('Pusher: There are no files that need to be uploaded')
+            print(Msg.WARNING + 'There are no files that need to be uploaded')
             exit(1)
 
 
-class Message:
-
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDL = '\033[0m'
+class Msg:
+    """colors"""
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    """custom msg types"""
+    OKBLUE = '\n\033[94m☑ Pusher: '
+    OKGREEN = '\n\033[92m☑ Pusher: '
+    WARNING = '\n\033[93m⚠ Pusher: '
+    FAIL = '\n\033[91m⛔ '
+    RESET = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
@@ -65,7 +68,8 @@ def get_args():
 
     args = sys.argv[1:]
     count = len(args)
-    usage = 'Usage: pusher [OPTION]\n    -m (modified)\n    -n (new)\n    -a (all)'
+    usage = Msg.BLUE + \
+        'Usage: pusher [OPTION]\n    -m (modified)\n    -n (new)\n    -a (all)'
 
     if count is 0 or count > 1:
         print(usage)
@@ -89,10 +93,10 @@ if __name__ == "__main__":
     tasksfile = open('.tasks', 'r')
     tasks = tasksfile.read().splitlines()
 
-    changecommit = input(
-        'How should you handle commits?\n0 - Default\n1 - Edit\nOpt: ')
+    changecommit = input(Msg.BLUE +
+                         'How should you handle commits?\n0 - Default\n1 - Edit\nOpt: ')
     if changecommit not in ['0', '1']:
-        print('Pusher: Invalid option')
+        print(Msg.FAIL + 'Invalid option ' + changecommit)
         exit(1)
     if changecommit is '0':
         for itemname in files:
