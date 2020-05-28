@@ -7,24 +7,22 @@ echo -e '\e[34m
 │██     ██  ██     ██ ██  ██ ██     ██ ██ │
 │██     ██████ ██████ ██  ██ ██████ ██  ██│
 \e[93m│                                     v1.1│
-│       Thank you for install push.       │'
+│      Thank you for install pusher.    🐍│
+└┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┘
 
+     \e[34m>>> \e[0m\e[4mSetting up hipposcreaper.\e[0m \e[34m<<<\e[0m'
 
 # Sets up the hipposcraper
 sudo mv * ../
 sudo mv ../read_scraper.py ../scrapers/
-
 cd ..
 
-
+echo -e "\e[34m☑\e[0m hipposcraper configured"
 # Sets up the pusher
 #+ configure alias
 
-
-echo -e '└┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┘'
 echo -e '
        \e[34m>>> \e[0m\e[4mSetting up shortcuts.\e[0m \e[34m<<<\e[0m'
-echo -e ''
 
 
 if ! grep -q tasker ~/.bashrc || \
@@ -37,9 +35,9 @@ if ! grep -q tasker.py ~/.bashrc
 then
     tasker_alias="alias tasker='python2 $(pwd)/tasker.py'"
     echo "$tasker_alias" >> ~/.bashrc
-    echo -e "\e[34m■\e[0m $tasker_alias"
+    echo -e "\e[34m☑\e[0m $tasker_alias"
 else
-    echo -e "\e[34m■\e[0m tasker already defined"
+    echo -e "\e[34m☑\e[0m tasker already defined"
 
 fi
 
@@ -47,9 +45,9 @@ if ! grep -q pusher.py ~/.bashrc
 then
     pusher_alias="alias pusher='python3 $(pwd)/pusher.py'"
     echo "$pusher_alias" >> ~/.bashrc
-    echo -e "\e[34m■\e[0m $pusher_alias"
+    echo -e "\e[34m☑\e[0m $pusher_alias"
 else
-    echo -e "\e[34m■\e[0m pusher already defined"
+    echo -e "\e[34m☑\e[0m pusher already defined"
 
 fi
 
@@ -63,7 +61,7 @@ echo -e '
 source ~/.bashrc
 sudo rm -r setup_pusher.sh
 
-echo -e "\e[34m■\e[0m the bash was reloaded"
+echo -e "\e[34m☑\e[0m the bash was reloaded"
 
 echo -e '
 
