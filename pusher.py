@@ -17,22 +17,20 @@ class Pusher:
             exit(1)
 
     def list_mod(self):
-
         try:
             """Modified files are captured"""
             return str(subprocess.check_output(
-                "git status -s . | grep ' M '", shell=True)).replace("b", '').replace(
+                "git status -s . | grep ' M '", shell=True)).replace("b'", '').replace(
                 ' M ', '').replace("\\n", "\n").replace("'", '').strip().split()
         except Exception:
             print('Pusher: There are no modified files that need to be uploaded')
             exit(1)
 
     def list_new(self):
-
         try:
             """New files are captured"""
             return str(subprocess.check_output(
-                "git status -s . | grep '?? '", shell=True)).replace("b", '').replace(
+                "git status -s . | grep '?? '", shell=True)).replace("b'", '').replace(
                 '?? ', '').replace("\\n", "\n").replace("'", '').strip().split()
         except Exception:
             print('Pusher: There are no new files that need to be uploaded')
@@ -43,28 +41,24 @@ class Pusher:
         try:
             """All files are captured"""
             return str(subprocess.check_output(
-                "git status -s .", shell=True)).replace("b", '').replace(
+                "git status -s .", shell=True)).replace("b'", '').replace(
                 '?? ', '').replace(' M ', '').replace("\\n", "\n").replace("'", '').replace(' D ', '') .strip().split()
 
         except Exception:
             print('Pusher: There are no files that need to be uploaded')
             exit(1)
 
-    def force(self):
 
-        try:
-            files = subprocess.check_output(
-                "git status -s . | grep ' M '", shell=True)
-        except expression as identifier:
-            pass
-        print(files)
-        try:
-            files += subprocess.check_output(
-                "git status -s . | grep '?? '", shell=True)
-        except Exception as ex:
-            print(ex)
+class Message:
 
-        print(files)
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDL = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 
 def get_args():
@@ -78,6 +72,7 @@ def get_args():
         exit(1)
     if args[0] == '-m':
         return pusher.list_mod()
+        raise TypeError('Error')
     elif args[0] == '-n':
         return pusher.list_new()
     elif args[0] == '-a':

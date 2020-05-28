@@ -4,7 +4,7 @@
 Usage:
     `./tasker.py https://intranet.hbtn.io/projects/231`
 """
-from scrapers import *
+import scra
 
 
 def get_args():
