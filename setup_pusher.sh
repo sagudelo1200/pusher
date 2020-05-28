@@ -59,12 +59,11 @@ echo -e '
          \e[34m>>> \e[0m\e[4mReloading .bashrc\e[0m \e[34m<<<\e[0m
 '
 
-echo -e "\e[34m■\e[0m the bash was reloaded"
-
 
 source ~/.bashrc
 sudo rm -r setup_pusher.sh
 
+echo -e "\e[34m■\e[0m the bash was reloaded"
 
 echo -e '
 
