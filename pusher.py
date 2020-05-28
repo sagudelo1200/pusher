@@ -71,7 +71,7 @@ def get_args():
 
     args = sys.argv[1:]
     count = len(args)
-    usage = 'Usage: pusher [OPTIONS]\n    -m (modified)\n    -n (new)\n    -a (all)'
+    usage = 'Usage: pusher [OPTION]\n    -m (modified)\n    -n (new)\n    -a (all)'
 
     if count is 0 or count > 1:
         print(usage)
@@ -125,7 +125,7 @@ if __name__ == "__main__":
             os.system('git add {}'.format(itemname))
             os.system("git commit -m '{}'".format(commit))
 
-        push = True if input('You want to upload the files now? Y/N\n>> ') in [
+        push = True if input('\n[=====================================]\nYou want to upload the files now? Y/N\n>> ') in [
             'Y', 'y'] else False
         if push:
             os.system('git push -u origin master')

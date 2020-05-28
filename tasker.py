@@ -20,7 +20,7 @@ def get_args():
         print("[ERROR] Too many arguments (must be one)")
         sys.exit()
     elif count == 0:
-        print("[ERROR] Too few arguments (must be one)")
+        print("Usage: tasker <project_url>")
         sys.exit()
 
     link = sys.argv[1]
