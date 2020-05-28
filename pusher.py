@@ -72,7 +72,6 @@ def get_args():
         exit(1)
     if args[0] == '-m':
         return pusher.list_mod()
-        raise TypeError('Error')
     elif args[0] == '-n':
         return pusher.list_new()
     elif args[0] == '-a':
