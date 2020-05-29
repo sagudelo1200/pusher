@@ -43,8 +43,8 @@ __-a:__ to upload all files (new and changed).
 > [Santiago Agudelo Gaviria](https://github.com/RedLyon1200)
 
 
-## Collaborator::
-> [Marlon Aurelio García Morales][https://github.com/clasesucatmarlon]
+## Collaborator:
+> [Marlon Aurelio García Morales](https://github.com/clasesucatmarlon)
 
 
 
