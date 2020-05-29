@@ -6,7 +6,8 @@ from scrapers import *
 
 """
 FROM PUSHER:
-We have configured this file for the correct operation of the pusher.hipposcraper 1.1.1 will not be affected by these modifications.
+We have configured this file for the correct operation of the pusher.
+hipposcraper 1.1.1 will not be affected by these modifications.
 """
 
 
