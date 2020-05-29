@@ -223,7 +223,7 @@ class ReadScraper:
             count = 0
             while count < len(self.task_names):
                 try:
-                    self.pointtasks.write("Task: {} [->] File: ./{}\n".format(
+                    self.pointtasks.write("Task: {}./{}\n".format(
                         self.task_names[count], self.file_names[count]))
                     count += 1
                 except IndexError:
