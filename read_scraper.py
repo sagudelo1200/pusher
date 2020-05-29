@@ -1,7 +1,13 @@
 #!/usr/bin/env python2
 """Module for ReadScraper"""
-from scrapers import *
+
 from bs4 import Comment
+from scrapers import *
+
+"""
+FROM PUSHER:
+We have configured this file for the correct operation of the pusher.hipposcraper 1.1.1 will not be affected by these modifications.
+"""
 
 
 class ReadScraper:
