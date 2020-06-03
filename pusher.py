@@ -83,7 +83,7 @@ def get_args():
 
     count = len(sys.argv[1:])
     usage = Msg.BLUE + \
-        '\nUsage: pusher [OPTION]\n    -m (modified)\n    -n (new)\n    -a (all)\n'
+        '\nUsage: pusher <option> [files]\n\nOptions:\n    -m (modified)\n    -n (new)\n    -a (all)\n'
 
     if count is 0:
         print(usage)
