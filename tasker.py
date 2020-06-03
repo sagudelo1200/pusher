@@ -49,7 +49,7 @@ def tasker():
     # Writing to .tasks with scraped data
     r_scraper.open_tasks()
     r_scraper.write_symple_tasks()
-    os.system("echo '.tasks' >> .gitignore")
+    os.system("echo '\n.tasks\n' >> .gitignore")
 
     print(
         "\n\033[92mSuccessfully completed tasks and stored in the .task file!\n")
