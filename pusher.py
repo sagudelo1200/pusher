@@ -16,33 +16,34 @@ class Pusher:
                 'You must first run the command:\ntasker <intranet_project_link>')
             exit(1)
 
-    def list_mod(self):
+    def list_mod(self, files):
         try:
             """Modified files are captured"""
             return str(subprocess.check_output(
-                "git status -s . | grep ' M '", shell=True)).replace("b'", '').replace(
+                "git status -s {} | grep ' M '".format(files), shell=True)).replace("b'", '').replace(
                 ' M ', '').replace("\\n", "\n").replace("'", '').strip().split()
         except Exception:
             msg.warning(
                 'There are no modified files that need to be uploaded')
             exit(1)
 
-    def list_new(self):
+    def list_new(self, files):
         try:
             """New files are captured"""
             return str(subprocess.check_output(
-                "git status -s . | grep '?? '", shell=True)).replace("b'", '').replace(
+                "git status -s {} | grep '?? '".format(files), shell=True)).replace("b'", '').replace(
                 '?? ', '').replace("\\n", "\n").replace("'", '').strip().split()
         except Exception:
             msg.warning('There are no new files that need to be uploaded')
             exit(1)
 
-    def list_all(self):
+    def list_all(self, files):
+        print('###', files)
 
         try:
             """All files are captured"""
             return str(subprocess.check_output(
-                "git status -s .", shell=True)).replace("b'", '').replace(
+                "git status -s {}".format(files), shell=True)).replace("b'", '').replace(
                 '?? ', '').replace(' M ', '').replace("\\n", "\n").replace("'", '').replace(' D ', '') .strip().split()
 
         except Exception:
@@ -80,20 +81,26 @@ class Msg:
 
 def get_args():
 
-    args = sys.argv[1:]
-    count = len(args)
+    count = len(sys.argv[1:])
     usage = Msg.BLUE + \
         '\nUsage: pusher [OPTION]\n    -m (modified)\n    -n (new)\n    -a (all)\n'
 
-    if count is 0 or count > 1:
+    if count is 0:
         print(usage)
         exit(1)
-    if args[0] == '-m':
-        return pusher.list_mod()
-    elif args[0] == '-n':
-        return pusher.list_new()
-    elif args[0] == '-a':
-        return pusher.list_all()
+
+    option = sys.argv[1]
+    files = []
+    if count > 1:
+        files = sys.argv[2:]
+    files = " ".join(files).strip()
+
+    if option == '-m':
+        return pusher.list_mod(files)
+    elif option == '-n':
+        return pusher.list_new(files)
+    elif option == '-a':
+        return pusher.list_all(files)
     else:
         print(usage)
         exit(1)
