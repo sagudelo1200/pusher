@@ -130,6 +130,7 @@ if __name__ == "__main__":
                     commit = task.replace('./' + itemname, '')
 
             os.system('git add {}'.format(itemname))
+            print('\nFile: {}'.format(itemname))
             os.system("git commit -m '{}'".format(commit))
 
         push = True if input(Msg.BLUE + '\n\n⍰ ' + Msg.RESET + 'You want to upload the files now? [Y/n]\n-> ') in [
@@ -148,6 +149,7 @@ if __name__ == "__main__":
             commit = input(
                 Msg.BLUE + '\nFile: \033[0m{}\n\033[94mInsert commit: \033[0m'.format(itemname))
             os.system('git add {}'.format(itemname))
+            print('\nFile: {}'.format(itemname))
             os.system("git commit -m '{}'".format(commit))
 
         push = True if input(Msg.BLUE + '\n\n⍰ ' + Msg.RESET + 'You want to upload the files now? [Y/n]\n-> ') in [
