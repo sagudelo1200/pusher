@@ -38,8 +38,6 @@ class Pusher:
             exit(1)
 
     def list_all(self, files):
-        print('###', files)
-
         try:
             """All files are captured"""
             return str(subprocess.check_output(
@@ -90,7 +88,7 @@ def get_args():
         exit(1)
 
     option = sys.argv[1]
-    files = []
+    files = ['.']
     if count > 1:
         files = sys.argv[2:]
     files = " ".join(files).strip()
