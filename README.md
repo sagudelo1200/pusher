@@ -29,13 +29,12 @@
 
 ## Synopsis
 
-pusher <option> [files]
+'pusher <option> [files]'
 
 ## How to execute pusher?  
 
 1. In order for pusher to obtain the task data, the first thing to do is to execute the command __tasker__, followed by the project URL of the intranet.hbtn.io (this step should only be performed once per project).
 2. With the pusher command you must select one of the options listed below:
-
 __-m:__ to upload files that are in a modified state.  
 __-n:__ to upload newly created files or files that are not within the repository.  
 __-a:__ to upload all files (new and changed). 
