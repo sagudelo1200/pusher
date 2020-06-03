@@ -29,7 +29,7 @@
 
 ## Synopsis
 
-'pusher \<option\> [files]'
+pusher \<option\> [files]
 
 ## How to execute pusher?  
 
