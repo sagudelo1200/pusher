@@ -17,8 +17,8 @@ class Pusher:
             exit(1)
 
     def list_mod(self, files):
+        """Modified files are captured"""
         try:
-            """Modified files are captured"""
             return str(subprocess.check_output(
                 "git status -s {} | grep ' M '".format(files), shell=True)).replace("b'", '').replace(
                 ' M ', '').replace("\\n", "\n").replace("'", '').strip().split()
@@ -28,8 +28,8 @@ class Pusher:
             exit(1)
 
     def list_new(self, files):
+        """New files are captured"""
         try:
-            """New files are captured"""
             return str(subprocess.check_output(
                 "git status -s {} | grep '?? '".format(files), shell=True)).replace("b'", '').replace(
                 '?? ', '').replace("\\n", "\n").replace("'", '').strip().split()
@@ -38,8 +38,8 @@ class Pusher:
             exit(1)
 
     def list_all(self, files):
+        """All files are captured"""
         try:
-            """All files are captured"""
             return str(subprocess.check_output(
                 "git status -s {}".format(files), shell=True)).replace("b'", '').replace(
                 '?? ', '').replace(' M ', '').replace("\\n", "\n").replace("'", '').replace(' D ', '') .strip().split()
