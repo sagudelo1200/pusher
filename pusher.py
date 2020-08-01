@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import sys
 import os
@@ -11,7 +11,7 @@ class Pusher:
     settings_path = settings_path.replace('pusher.py', 'settings.json')
 
     def __init__(self):
-        """Save settings into json file"""
+        """Save or load settings in a json file"""
         opt = ' '
 
         if os.path.exists(self.settings_path):
@@ -20,13 +20,13 @@ class Pusher:
 
                 self.tasker = info['tasker']
                 self.commit = info['commit']
-                self.branch = info['branch']
         else:
-            msg.message('Settings:\n')
+            msg.message('Settings:')
             config = {}
 
             while opt not in 'nNyY':
-                opt = input('¿Desea utulizar el tasker por defecto?: Y/n\n')
+                opt = input(
+                    '¿Desea utulizar el tasker para los commits por defecto?: Y/n\n')
 
             if opt in 'yY':
                 config['tasker'] = True
@@ -37,7 +37,8 @@ class Pusher:
                 '\nIngrese [#] si desea que su commit tenga el nombre del archivo\n\n\tEjemplo: archivo [#] subido == archivo pusher.py subido\n')
             config['commit'] = input('Inserte su commit por defecto: ')
 
-            config['branch'] = input('Rama de trabajo por defecto: ')
+            self.tasker = config['tasker']
+            self.commit = config['commit']
 
             with open(self.settings_path, 'w') as f_obj:
                 json.dump(config, f_obj, indent=4)
@@ -107,7 +108,7 @@ class Msg:
         print(self.OK + message + '\n')
 
 
-def get_args():
+def get_files():
 
     count = len(sys.argv[1:])
     usage = Msg.BLUE + \
@@ -134,11 +135,45 @@ def get_args():
         exit(1)
 
 
-if __name__ == "__main__":
+def push(custom=False):
+    """push inmediatly or not"""
+    opt = ' '
+    commit = 'custom' if custom else 'default'
 
+    branch = str(subprocess.check_output("git branch", shell=True))
+
+    for x, y in enumerate(branch):
+        if y == '*':
+            start = x + 2
+            for i, j in enumerate(branch[start:]):
+                if j == '\\':
+                    end = start + i
+                    break
+
+    branch = branch[start:end]
+
+    while opt not in ['Y', 'y', 'N', 'n']:
+        opt = input(Msg.BLUE + '\n\n⍰ ' + Msg.RESET +
+                    'You want to upload the files now? [Y/n]\n-> ')
+    if opt in 'yY':
+        print(Msg.GREEN + '\nUploading files...\033[0m')
+        os.system('git push -u origin {}'.format(branch))
+        msg.ok('Files uploaded with {} commit to {} branch.\n'.format(
+            commit, branch))
+    else:
+        msg.warning('use "git push" to publish your local commits')
+
+
+def add(file, commit):
+    os.system('git add {}'.format(file))
+    print('\nFile: {}'.format(file))
+    os.system("git commit -m '{}'".format(commit))
+
+
+if __name__ == "__main__":
     msg = Msg()
     pusher = Pusher()
-    files = get_args()
+    files = get_files()
 
     if len(files) == 0:
         msg.error('There are no files that need to be uploaded')
@@ -148,36 +183,22 @@ if __name__ == "__main__":
         if os.path.isfile('.tasks'):
             with open('.tasks') as f_obj:
                 tasks = f_obj.read().splitlines()
-
             for itemname in files:
                 for task in tasks:
                     if task.find('./' + itemname) >= 0:
                         commit = task.replace('./' + itemname, '')
-
-                        os.system('git add {}'.format(itemname))
-                        print('\nFile: {}'.format(itemname))
-                        os.system("git commit -m '{}'".format(commit))
+                        add(itemname, commit)
                     else:
                         print('nombre de archivo no encontrado en .tasks')
-
-            push = True if input(Msg.BLUE + '\n\n⍰ ' + Msg.RESET +
-                                 'You want to upload the files now? [Y/n]\n-> ') in 'Yy' else False
-            if push:
-                print(Msg.GREEN + '\nUploading files...\033[0m')
-                os.system('git push -u origin {}'.format(pusher.branch))
-                msg.ok(
-                    'Files uploaded with default commit\n')
-            else:
-                msg.warning(
-                    'You will need to use "git push" to publish your local commits')
-
+                        commit = input('Inserte commit: ')
+                        add(itemname, commit)
         else:
             msg.error(
                 'You must first run the command:\ntasker <intranet_project_url>')
             exit(1)
     else:
         changecommit = input(
-            Msg.BLUE + '\nHow should you handle commits?\n0 - Default\n1 - Edit\nOpt: ' + Msg.RESET)
+            Msg.BLUE + '\nHow do you want to handle commits?\n0 - Default\n1 - Edit\nOpt: ' + Msg.RESET)
 
         if changecommit not in '01':
             msg.error('Invalid option ' + changecommit)
@@ -187,38 +208,13 @@ if __name__ == "__main__":
             for itemname in files:
                 commit = pusher.commit
                 commit = commit.replace('[#]', itemname)
-
-                os.system('git add {}'.format(itemname))
-                print('\nFile: {}'.format(itemname))
-                os.system("git commit -m '{}'".format(commit))
-
-            push = True if input(Msg.BLUE + '\n\n⍰ ' + Msg.RESET +
-                                 'You want to upload the files now? [Y/n]\n-> ') in 'Yy' else False
-
-            if push:
-                print(Msg.GREEN + '\nUploading files...\033[0m')
-                os.system('git push -u origin {}'.format(pusher.branch))
-                msg.ok(
-                    'Files uploaded with default commit\n')
-            else:
-                msg.warning(
-                    'You will need to use "git push" to publish your local commits')
+                add(itemname, commit)
+            push()
 
         else:
             for itemname in files:
                 commit = input(
-                    Msg.BLUE + '\nFile: \033[0m{}\n\033[94mInsert commit: \033[0m'.format(itemname))
-                os.system('git add {}'.format(itemname))
-                print('\nFile: {}'.format(itemname))
-                os.system("git commit -m '{}'".format(commit))
-
-            push = True if input(Msg.BLUE + '\n\n⍰ ' + Msg.RESET +
-                                 'You want to upload the files now? [Y/n]\n-> ') in 'Yy' else False
-            if push:
-                print(Msg.GREEN + '\nUploading files...\033[0m')
-                os.system('git push -u origin {}'.format(pusher.branch))
-                msg.ok(
-                    'Files uploaded with default commit\n')
-            else:
-                msg.warning(
-                    'You will need to use "git push" to publish your local commits')
+                    msg.BLUE + '\nFile: \033[0m{}\n\033[94mInsert commit: \033[0m'.format(itemname))
+                commit = commit.replace('[#]', itemname)
+                add(itemname, commit)
+            push(custom=True)
