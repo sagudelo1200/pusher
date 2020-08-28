@@ -182,16 +182,25 @@ if __name__ == "__main__":
     if pusher.tasker:
         if os.path.isfile('.tasks'):
             with open('.tasks') as f_obj:
-                tasks = f_obj.read().splitlines()
-            for itemname in files:
-                for task in tasks:
-                    if task.find('./' + itemname) >= 0:
-                        commit = task.replace('./' + itemname, '')
-                        add(itemname, commit)
-                    else:
+                tasks = f_obj.read().replace("'", "´").splitlines()
+                for itemname in files:
+                    print(f"%%%%%%%%%", itemname)
+
+                    for task in tasks:
+                        commit_flag = False
+                        """ print(f"###########", task) """
+                        if task.find('./' + itemname) >= 0:
+                            commit = task.replace('./' + itemname, '')
+                            add(itemname, commit)
+                            commit_flag = True
+                            break
+
+                    if commit_flag == False:
                         print('nombre de archivo no encontrado en .tasks')
                         commit = input('Inserte commit: ')
                         add(itemname, commit)
+                push()
+
         else:
             msg.error(
                 'You must first run the command:\ntasker <intranet_project_url>')
